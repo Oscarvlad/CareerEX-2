@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = 8000;
 
 
 
@@ -31,19 +31,27 @@ const drugs = [
     { id: 20, name: "Folic Acid", category: "Supplement", dosageMg: 5, isPrescriptionOnly: false, stock: 250, manufacturer: "Nature’s Bounty" }
 ];
 
-// 1. GET /drugs/antibiotics
+// Home Page
+app.get ("/", (req, res) => {
+    console.log('Drug API Testing')
+
+    res.send ('Hello From Home Page');
+});
+
+
+// GET /drugs/antibiotics
 app.get("/drugs/antibiotics", (req, res) => {
     const antibiotics = drugs.filter(drug => drug.category === "Antibiotic");
     res.json(antibiotics);
 });
 
-// 2. GET /drugs/names
+// GET /drugs/names
 app.get("/drugs/names", (req, res) => {
     const drugNamesLowercase = drugs.map(drug => drug.name.toLowerCase());
     res.json(drugNamesLowercase);
 });
 
-// 3. POST /drugs/by-category
+// POST /drugs/by-category
 app.post("/drugs/by-category", (req, res) => {
     const { category } = req.body;
     if (!category) {
@@ -53,37 +61,37 @@ app.post("/drugs/by-category", (req, res) => {
     res.json(drugsByCategory);
 });
 
-// 4. GET /drugs/names-manufacturers
+// GET /drugs/names-manufacturers
 app.get("/drugs/names-manufacturers", (req, res) => {
     const namesManufacturers = drugs.map(drug => ({ name: drug.name, manufacturer: drug.manufacturer }));
     res.json(namesManufacturers);
 });
 
-// 5. GET /drugs/prescription
+// GET /drugs/prescription
 app.get("/drugs/prescription", (req, res) => {
     const prescriptionDrugs = drugs.filter(drug => drug.isPrescriptionOnly);
     res.json(prescriptionDrugs);
 });
 
-// 6. GET /drugs/formatted
+// GET /drugs/formatted
 app.get("/drugs/formatted", (req, res) => {
     const formattedDrugs = drugs.map(drug => `Drug: ${drug.name} - ${drug.dosageMg}mg`);
     res.json(formattedDrugs);
 });
 
-// 7. GET /drugs/low-stock
+// GET /drugs/low-stock
 app.get("/drugs/low-stock", (req, res) => {
     const lowStockDrugs = drugs.filter(drug => drug.stock < 50);
     res.json(lowStockDrugs);
 });
 
-// 8. GET /drugs/non-prescription
+// GET /drugs/non-prescription
 app.get("/drugs/non-prescription", (req, res) => {
     const nonPrescriptionDrugs = drugs.filter(drug => !drug.isPrescriptionOnly);
     res.json(nonPrescriptionDrugs);
 });
 
-// 9. POST /drugs/manufacturer-count
+// POST /drugs/manufacturer-count
 app.post("/drugs/manufacturer-count", (req, res) => {
     const { manufacturer } = req.body;
     if (!manufacturer) {
@@ -93,7 +101,7 @@ app.post("/drugs/manufacturer-count", (req, res) => {
     res.json({ manufacturer, count });
 });
 
-// 10. GET /drugs/count-analgesics
+// GET /drugs/count-analgesics
 app.get("/drugs/count-analgesics", (req, res) => {
     const analgesicCount = drugs.filter(drug => drug.category === "Analgesic").length;
     res.json({ category: "Analgesic", count: analgesicCount });
