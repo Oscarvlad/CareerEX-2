@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const itemsRouter = require("./routes/items");
+const itemsRouter = require("./routes/Items");
 
 // Load environment variables
 dotenv.config();
