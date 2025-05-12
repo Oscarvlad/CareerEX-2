@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Item = require("");
+const Item = require("../models/item");
 
 // Add a found item
 router.post("/", async (req, res) => {
